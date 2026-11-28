@@ -1,12 +1,11 @@
-
 import streamlit as st
 import pandas as pd
-import json
 import hashlib
 
 from services.data_loader import load_dataset
 from services.dataset_analyzer import analyze_dataset
 from services.llm_analyst import ask_data_analyst
+from services.visualization import render_visualization_tab
 
 
 # --------------------------------------------------
@@ -43,7 +42,7 @@ if "profile" not in st.session_state:
 
 st.title("InsightRAG")
 st.caption(
-    "AI-powered Data Analysis Using LangChain, RAG, and Pandas"
+    "AI-powered Data Analysis Tool"
 )
 
 st.markdown(
@@ -164,9 +163,12 @@ if df is not None:
     st.divider()
 
     # Dataset tabs
-    tab1, tab2, tab3 = st.tabs(
-        ["Data Preview", "Dataset Profile", "Statistics"]
-    )
+    tab1, tab2, tab3, tab4 = st.tabs([
+    "Data Preview",
+    "Dataset Profile",
+    "Statistics",
+    "Visualization"
+    ])
 
     with tab1:
 
@@ -245,6 +247,9 @@ if df is not None:
             st.info(
                 "No numeric columns were detected in this dataset."
             )
+
+    with tab4:
+        render_visualization_tab(df)
 
     st.divider()
 
@@ -367,6 +372,5 @@ else:
 st.divider()
 
 st.caption(
-    "InsightRAG | Built with Python, Streamlit, "
-    "LangChain, Gemini, and Pandas"
+    "InsightRAG @2026"
 )
